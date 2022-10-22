@@ -30,9 +30,9 @@ const routes = [
     props: true
   },
   {
-    path: '/generate-ap',
-    name: 'generate-ap',
-    component: () => import('../views/generate-ap.vue'),
+    path: '/generate-proxy',
+    name: 'generate-proxy',
+    component: () => import('../views/generate-proxy.vue'),
     props: true
   },
   {

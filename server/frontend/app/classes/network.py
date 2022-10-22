@@ -23,9 +23,7 @@ class Network(object):
     def __init__(self):
         self.AP_SSID = False
         self.AP_PASS = False
-        self.iface_in = read_config(("network", "in"))
         self.iface_out = read_config(("network", "out"))
-        self.enable_interface(self.iface_in)
         self.enable_interface(self.iface_out)
         self.enable_forwarding()
         self.reset_dnsmasq_leases()
