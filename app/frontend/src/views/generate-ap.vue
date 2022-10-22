@@ -1,3 +1,5 @@
+<!-- TODO: This entire file can likely be deleted, as AP generation isn't needed anymore. -->
+
 <template>
     <div class="center">
         <div v-if="(error == false)">

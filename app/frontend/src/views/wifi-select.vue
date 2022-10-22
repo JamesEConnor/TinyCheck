@@ -1,3 +1,5 @@
+<!-- TODO: This entire file can likely be deleted, as wifi selection isn't needed from the kiosk anymore. -->
+
 <template>
     <div :class="[ keyboard == false ? 'center' : '' ]">
         <div v-if="keyboard == false">

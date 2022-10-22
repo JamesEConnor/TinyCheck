@@ -19,6 +19,10 @@ export default {
     },
     methods: {
         next: function() {
+            //TODO: Remove SSID stuff, instead when a user clicks "next"
+            //it should go to the screen that generates a user session
+            //(including a unique port, session ID, and QR code)
+
             var saved_ssid = this.saved_ssid
             var list_ssids = this.list_ssids
             var internet = this.internet
