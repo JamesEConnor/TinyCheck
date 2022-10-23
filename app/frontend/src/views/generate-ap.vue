@@ -1,3 +1,5 @@
+<!-- TODO: Change this from generating APs to generating Proxies
+
 <template>
     <div class="center">
         <div v-if="(error == false)">
@@ -17,7 +19,6 @@
                     </div>
                 </div>
                 <br /><br /><br /><br /> <br /><br /><br /><br /><br /><br />
-                <!-- Requite a CSS MEME for that shit :) -->
                 <span class="legend">{{ $t("generate-ap.tap_msg") }}</span>
             </div>
             <div v-else>
@@ -124,3 +125,4 @@ export default {
 }
 </script>
 
+-->

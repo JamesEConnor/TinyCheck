@@ -14,7 +14,6 @@
         components: {},
         data() {
             return {
-                list_ssids: [],
                 internet: false
             }
         },
@@ -22,21 +21,11 @@
             internet_check: function() {
                 axios.get('/api/network/status', { timeout: 30000 })
                     .then(response => {
-                        if (response.data.internet) this.internet = true
-                        if (window.config.iface_out.charAt(0) == 'e') {
+                        if (response.data.internet) {
+                            this.internet = true
                             setTimeout(function () { this.goto_home(); }.bind(this), 1000);
-                        } else {
-                            this.get_wifi_networks();
                         }
                     })
-                    .catch(err => (console.log(err)))
-            },
-            get_wifi_networks: function() {
-                axios.get('/api/network/wifi/list', { timeout: 30000 })
-                    .then(response => { 
-                        this.list_ssids = response.data.networks
-                        this.goto_home();
-                     })
                     .catch(err => (console.log(err)))
             },
             delete_captures: function() {
@@ -44,9 +33,8 @@
                     .catch(err => (console.log(err)))
             }, 
             goto_home: function() {
-                var list_ssids = this.list_ssids
                 var internet   = this.internet
-                router.replace({ name: 'home', params: { list_ssids: list_ssids, internet: internet } });
+                router.replace({ name: 'home', params: { internet: internet } });
             }
         },
         created: function() {

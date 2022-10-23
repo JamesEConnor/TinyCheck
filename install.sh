@@ -415,35 +415,36 @@ check_interfaces(){
         done
     fi
 
+    ### CHANGED: COMMENTED OUT, DO NOT NEED WIFI ACCESSIBILITY FOR REMOTE VERSION
     # Setup of iface_in which can be a only a
     # Wi-Fi interface with AP mode available.
-    for iface in $IFACES;
-    do
-        if echo "$iface" | grep -Eq "(wlan[0-9]|wl[a-z0-9]{,20})"; then
-            config="$(ip a s $iface)"                             # Get the iface logic configuration
+    # for iface in $IFACES;
+    # do
+    #     if echo "$iface" | grep -Eq "(wlan[0-9]|wl[a-z0-9]{,20})"; then
+    #         config="$(ip a s $iface)"                             # Get the iface logic configuration
 
-            if echo "$config" | grep -qv "inet "; then              # Test if not currently connected
-                hw="$(iw $iface info | grep wiphy | cut -d" " -f2)" # Get the iface hardware id.
-                info="$(iw phy$hw info)"                            # Get the iface hardware infos.
-                if echo "$info" | grep -qE "* AP$"; then            # Know if the iface has the AP mode available.
-                    echo -n "[?] The interface $iface can be used for the Wi-Fi Access Point. Do you want to use it for the TinyCheck Access Point ? [Yes/No] "
-                    read answer
-                    if [[ "$answer" =~ ^([yY][eE][sS]|[yY])$ ]]
-                    then
-                        IFACE_IN="$iface"
-                        echo -e "\e[92m    [✔] $iface settled as an Access Point\e[39m"
-                        break
-                    fi
-                fi
-            fi
-        fi
-    done
-    if [ "${IFACE_IN}" != "" ] && [ "${IFACE_OUT}" != "" ]; then
-        echo -e "\e[92m    [✔] Network configuration settled!\e[39m"
-    else
-        echo -e "\e[91m    [✘] You must select two interfaces, exiting.\e[39m"
-        exit 1
-    fi
+    #         if echo "$config" | grep -qv "inet "; then              # Test if not currently connected
+    #             hw="$(iw $iface info | grep wiphy | cut -d" " -f2)" # Get the iface hardware id.
+    #             info="$(iw phy$hw info)"                            # Get the iface hardware infos.
+    #             if echo "$info" | grep -qE "* AP$"; then            # Know if the iface has the AP mode available.
+    #                 echo -n "[?] The interface $iface can be used for the Wi-Fi Access Point. Do you want to use it for the TinyCheck Access Point ? [Yes/No] "
+    #                 read answer
+    #                 if [[ "$answer" =~ ^([yY][eE][sS]|[yY])$ ]]
+    #                 then
+    #                     IFACE_IN="$iface"
+    #                     echo -e "\e[92m    [✔] $iface settled as an Access Point\e[39m"
+    #                     break
+    #                 fi
+    #             fi
+    #         fi
+    #     fi
+    # done
+    # if [ "${IFACE_IN}" != "" ] && [ "${IFACE_OUT}" != "" ]; then
+    #     echo -e "\e[92m    [✔] Network configuration settled!\e[39m"
+    # else
+    #     echo -e "\e[91m    [✘] You must select two interfaces, exiting.\e[39m"
+    #     exit 1
+    # fi
 }
 
 create_database() {
