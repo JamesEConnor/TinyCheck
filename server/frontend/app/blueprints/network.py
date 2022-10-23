@@ -38,13 +38,13 @@ def api_connect_wifi():
     return jsonify(res)
 
 
-@network_bp.route("/ap/start", methods=["GET"])
-def api_start_ap():
+@network_bp.route("/proxy/start", methods=["GET"])
+def api_start_proxy():
     """ Start an access point """
-    return jsonify(network.start_ap())
+    return jsonify(network.start_proxy())
 
 
-@network_bp.route("/ap/stop", methods=["GET"])
-def api_stop_ap():
+@network_bp.route("/proxy/stop", methods=["GET"])
+def api_stop_proxy():
     """ Generate an access point """
-    return jsonify(network.stop_hostapd())
+    return jsonify(network.stop_proxy())

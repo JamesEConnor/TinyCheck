@@ -69,6 +69,9 @@ network:
   - network
   - wifi
   tokenized_ssids: true
+  override_ip: ""
+  port_bounds_low: 32000
+  port_bounds_high: 34000
 
 # WATCHERS -
 # They are used to grab automatically new IOCs or whitelisted
