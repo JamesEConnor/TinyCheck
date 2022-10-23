@@ -47,7 +47,7 @@ class Capture(object):
 
         try:
             sp.Popen(["tshark",  "-i", self.iface, "-w",
-                      self.pcap, "-f", "tcp or udp"])
+                      self.pcap, "-f", "tcp or udp"], stdout=sp.DEVNULL)
             return {"status": True,
                     "message": "Capture started",
                     "capture_token": self.capture_token}

@@ -100,7 +100,7 @@ export default {
             clearInterval(this.interval);
             var capture_token = this.capture_token
             var capture_start = this.capture_start
-            var device_name = "DUMMY"//data.name
+            var device_name = "Device"//data.name
             router.replace({
                 name: 'capture',
                 params: {

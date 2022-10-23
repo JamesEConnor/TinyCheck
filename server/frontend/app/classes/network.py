@@ -23,7 +23,7 @@ from app.utils import terminate_process, read_config
 class Network(object):
 
     # A dictionary to map all ports to socket objects.
-    socket_objs = {}
+    proc_objs = {}
 
     def __init__(self):
         self.proxy_ip = False
@@ -200,7 +200,6 @@ class Network(object):
             # Generate a random port number.
             self.proxy_port = random.randrange(bounds_low, bounds_high + 1);
             port_is_valid = True
-            print(self.proxy_port)
 
             if self.proxy_port < 0:
                 port_is_valid = False
@@ -209,13 +208,14 @@ class Network(object):
             else:
                 # Attempt to allocate the socket.
                 try:
-                    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    sock.bind(("0.0.0.0", self.proxy_port))
+                    proc = sp.Popen(["nc", "-l", str(self.proxy_port)],
+                    stdout=sp.PIPE)
 
-                    # Store the socket object for future use.
-                    Network.socket_objs[self.proxy_port] = sock
+                    # Store the process object for future use.
+                    Network.proc_objs[self.proxy_port] = proc
                 # The most likely case for an exception is that the port is already binded.
                 except Exception as e:
+                    print(e)
                     port_is_valid = False
         
 
@@ -227,9 +227,9 @@ class Network(object):
 
     # Stops a proxy by closing the socket and removing the entry.
     def stop_proxy(self):
-        Network.socket_objs[self.proxy_port].close()
+        Network.proc_objs[self.proxy_port].kill()
 
-        Network.socket_objs.pop(self.proxy_port)
+        Network.proc_objs.pop(self.proxy_port)
 
     def enable_interface(self, iface):
         """
