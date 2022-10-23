@@ -24,12 +24,6 @@ const routes = [
     props: true
   },
   {
-    path: '/wifi-select',
-    name: 'wifi-select',
-    component: () => import('../views/wifi-select.vue'),
-    props: true
-  },
-  {
     path: '/generate-proxy',
     name: 'generate-proxy',
     component: () => import('../views/generate-proxy.vue'),

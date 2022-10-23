@@ -35,7 +35,7 @@ class Capture(object):
         self.capture_dir = "/tmp/{}/".format(self.capture_token)
         self.assets_dir = "/tmp/{}/assets/".format(self.capture_token)
         self.pcap = self.capture_dir + "capture.pcap"
-        self.iface = read_config(("network", "in"))
+        self.iface = read_config(("network", "out"))
 
         # For packets monitoring
         self.list_pkts = []
@@ -47,7 +47,7 @@ class Capture(object):
 
         try:
             sp.Popen(["tshark",  "-i", self.iface, "-w",
-                      self.pcap, "-f", "tcp or udp"])
+                      self.pcap, "-f", "tcp or udp"], stdout=sp.DEVNULL)
             return {"status": True,
                     "message": "Capture started",
                     "capture_token": self.capture_token}

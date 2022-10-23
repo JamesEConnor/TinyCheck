@@ -7,7 +7,7 @@ from app.classes.device import Device
 device_bp = Blueprint("device", __name__)
 
 
-@device_bp.route("/get/<token>", methods=["GET"])
-def api_device_get(token):
+@device_bp.route("/get/<token>/<port>", methods=["GET"])
+def api_device_get(token, port):
     """ Get device assets """
-    return jsonify(Device(token).get())
+    return jsonify(Device(token, port).get())

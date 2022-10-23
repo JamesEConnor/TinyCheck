@@ -20,7 +20,8 @@
     "proxy_port": "Proxy port",
     "tap_msg": "Tap the white frame to generate a new proxy address.",
     "generate_proxy_msg": "We generate a proxy for you.",
-    "error_msg1": "Unfortunately, we got some issues <br />during the proxy creation."
+    "error_msg1": "Unfortunately, we got some issues <br />during the proxy creation.",
+    "continue_button": "Continue"
   },
   "report": {
     "show_full_report": "Show the full report",
