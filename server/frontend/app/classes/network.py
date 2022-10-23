@@ -29,7 +29,6 @@ class Network(object):
         self.proxy_ip = False
         self.proxy_port = False
         self.iface_out = read_config(("network", "out"))
-        self.enable_interface(self.iface_in)
         self.enable_interface(self.iface_out)
         self.random_choice_alphabet = "abcdef1234567890"
 
@@ -178,6 +177,11 @@ class Network(object):
                     "message": "Interface not present."}
 
 
+        # Stop any existing socket
+        if self.proxy_port:
+            self.stop_proxy()
+
+
         ### Calculate parameters
 
         # Use a pre-specified IP address, if specified. Otherwise, use the external IP.
@@ -196,6 +200,7 @@ class Network(object):
             # Generate a random port number.
             self.proxy_port = random.randrange(bounds_low, bounds_high + 1);
             port_is_valid = True
+            print(self.proxy_port)
 
             if self.proxy_port < 0:
                 port_is_valid = False
@@ -216,15 +221,15 @@ class Network(object):
 
         # Launch hostapd
         return {"status": True,
-                "message": "AP started",
+                "message": "Proxy started",
                 "proxy_ip": self.proxy_ip,
                 "proxy_port": self.proxy_port}
 
     # Stops a proxy by closing the socket and removing the entry.
     def stop_proxy(self):
-        Network.socket_objs[self.port].close()
+        Network.socket_objs[self.proxy_port].close()
 
-        Network.socket_objs.pop(self.port)
+        Network.socket_objs.pop(self.proxy_port)
 
     def enable_interface(self, iface):
         """

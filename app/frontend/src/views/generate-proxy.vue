@@ -6,15 +6,19 @@
             <div v-if="proxy_ip">
                 <div class="card apcard" v-on:click="generate_proxy()">
                     <div class="columns">
-                        <div class="column col-5"><br />
-                            <span class="light-grey">{{ $t("generate-ap.proxy_ip") }} </span><br />
+                        <div class="column w-100"><br />
+                            <span class="light-grey">{{ $t("generate-proxy.proxy_ip") }} </span><br />
                             <h4>{{ proxy_ip }}</h4>
-                            <span class="light-grey">{{ $t("generate-ap.proxy_port") }} </span><br />
+                            <span class="light-grey">{{ $t("generate-proxy.proxy_port") }} </span><br />
                             <h4>{{ proxy_port }}</h4>
                         </div>
                     </div>
                 </div>
-                <br /><br /><br /><br /> <br /><br /><br /><br /><br /><br />
+                <br /><br /><br /><br /> <br /><br /><br /><br /><br /><br /><br /><br />
+
+                <button class="btn btn-primary" v-on:click="move_to_capture()">{{ $t("generate-proxy.continue_button") }}</button>
+                <br /><br />
+
                 <!-- Requite a CSS MEME for that shit :) -->
                 <span class="legend">{{ $t("generate-proxy.tap_msg") }}</span>
             </div>
@@ -55,7 +59,6 @@ export default {
     methods: {
         generate_proxy: function() {
             clearInterval(this.interval);
-            this.ssid_name = false
             axios.get('/api/network/proxy/start', { timeout: 30000 })
                 .then(response => (this.show_proxy(response.data)))
         },
@@ -90,25 +93,22 @@ export default {
         },
         get_device: function() {
             this.interval = setInterval(() => {
-                axios.get(`/api/device/get/${this.capture_token}`, { timeout: 30000 })
-                    .then(response => (this.check_device(response.data)))
+                axios.get(`/api/device/get/${this.capture_token}/${this.proxy_port}`, { timeout: 30000 })
             }, 500);
         },
-        check_device: function(data) {
-            if (data.status) {
-                clearInterval(this.interval);
-                var capture_token = this.capture_token
-                var capture_start = this.capture_start
-                var device_name = data.name
-                router.replace({
-                    name: 'capture',
-                    params: {
-                        capture_token: capture_token,
-                        capture_start: capture_start,
-                        device_name: device_name
-                    }
-                });
-            }
+        move_to_capture: function() {
+            clearInterval(this.interval);
+            var capture_token = this.capture_token
+            var capture_start = this.capture_start
+            var device_name = "DUMMY"//data.name
+            router.replace({
+                name: 'capture',
+                params: {
+                    capture_token: capture_token,
+                    capture_start: capture_start,
+                    device_name: device_name
+                }
+            });
         }
     },
     created: function() {
